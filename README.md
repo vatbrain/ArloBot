@@ -39,19 +39,20 @@ Ask questions in the [Parallax Forums](http://forums.parallax.com/ "Parallax For
 Once your robot is built, you can use this package.
 
 ## Requirements ##
-Arlobot operates on ROS Indigo which requires Ubuntu 14.04 LTS, or Xbuntu or Lubuntu of the same version. I personally use Lubuntu on my robot's on board computer.
+Arlobot operates on ROS Indigo which requires Ubuntu 14.04 LTS, or Xbuntu or Lubuntu of the same version. I personally use Lubuntu on my robot's on board computer.  
+NOTE: I have a Kinetic branch that runs on 16.04 now. I suggest using it instead now. I will soon make that the default. I am only waiting until I do some more testing.  
 
 If you put a fresh copy of Lubuntu on your robot's laptop then you can use the quick install script below.
 
 ## Quick Install: ##
 There is now a script to install everything. Just run:
 
-For ROS Indigo on Ubuntu/Kubuntu/Lubuntu 14.04 LTS:  
+DEPRECATED: For ROS Indigo on Ubuntu/Kubuntu/Lubuntu 14.04 LTS:  
 ```
-bash <(wget -qO- --no-cache https://raw.githubusercontent.com/chrisl8/ArloBot/master/setup.sh)
+bash <(wget -qO- --no-cache https://raw.githubusercontent.com/chrisl8/ArloBot/indigo/setup-indigo.sh)
 ```
 
-EXPERIMENTAL!!!! - For ROS Kinetic on Ubuntu/Kubuntu/Lubuntu 16.04 LTS:  
+RECOMMENDED: For ROS Kinetic on Ubuntu/Kubuntu/Lubuntu 16.04 LTS:  
 ```
 bash <(wget -qO- --no-cache https://raw.githubusercontent.com/chrisl8/ArloBot/kinetic/setup-kinetic.sh)
 ```
@@ -81,9 +82,10 @@ The "workstation" install uses "Jade" version of ROS, so it will work on Ubuntu 
 ```
 bash <(wget -qO- --no-cache https://raw.githubusercontent.com/chrisl8/ArloBot/master/workstation.sh)
 ```  
+
 or if you have Ubuntu 16 use the "Kinetic" workstation install:  
 ```
-bash <(wget -qO- --no-cache https://raw.githubusercontent.com/chrisl8/ArloBot/master/workstation-kinetic.sh)
+bash <(wget -qO- --no-cache https://raw.githubusercontent.com/chrisl8/ArloBot/kinetic/workstation-kinetic.sh)
 ```  
 and your system will be set up to use as a "remote" station.
 To update your code just run the same script again and it will pull down and compile anything new without erasing custom settings.
