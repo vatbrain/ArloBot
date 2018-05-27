@@ -643,47 +643,48 @@ class PropellerComm(object):
         #     IRranges[x] = ir[0]
 
         # Single Point code:
-        #for x in range(180 - sensor_spread / 2, 180 + sensor_spread / 2):
-        ping_ranges[180 + sensor_separation * 2] = ping[5]
-        ir_ranges[180 + sensor_separation * 2] = ir[5]
+        # In LaserScan order, with Front_Center at zero, and rotating counter clockwise.
+        # Seems like the ping data should be transmitted from the propeller in this order...
 
-        ping_ranges[180 + sensor_separation] = ping[6]
-        ir_ranges[180 + sensor_separation] = ir[6]
-
-        ping_ranges[180] = ping[7]  # Rear Sensor
-        ir_ranges[180] = ir[7]  # Rear Sensor
-
-        ping_ranges[180 - sensor_separation] = ping[8]
-        ir_ranges[180 - sensor_separation] = ir[8]
-
-        ping_ranges[180 - sensor_separation * 2] = ping[9]
-        ir_ranges[180 - sensor_separation * 2] = ir[9]
-
-        # for x in range((360 - sensor_separation * 2) - sensor_spread / 2,
-        #                (360 - sensor_separation * 2) + sensor_spread / 2):
-        ping_ranges[360 - sensor_separation * 2] = ping[4]
-        ir_ranges[360 - sensor_separation * 2] = ir[4]
-
-        # for x in range((360 - sensor_separation) - sensor_spread / 2,
-        #                (360 - sensor_separation) + sensor_spread / 2):
-        ping_ranges[360 - sensor_separation] = ping[3]
-        ir_ranges[360 - sensor_separation] = ir[3]
-
-        #for x in range(360 - sensor_spread / 2, 360):
-        #PINGranges[x] = ping[2]
-        #IRranges[x] = ir[2]
-        # Crosses center line
-        #for x in range(0, sensor_spread /2):
+        # Front Center 
         ping_ranges[0] = ping[2]
         ir_ranges[0] = ir[2]
 
-        #for x in range(sensor_separation - sensor_spread / 2, sensor_separation + sensor_spread / 2):
-        ping_ranges[sensor_separation] = ping[1]
-        ir_ranges[sensor_separation] = ir[1]
+        # Front Near Left 
+        ping_ranges[sensor_separation] = ping[3] 
+        ir_ranges[sensor_separation] = ir[3] 
 
-        #for x in range((sensor_separation * 2) - sensor_spread / 2, (sensor_separation * 2) + sensor_spread / 2):
-        ping_ranges[sensor_separation * 2] = ping[0]
-        ir_ranges[sensor_separation * 2] = ir[0]
+        # Front Far Left (Close to wheel)
+        ping_ranges[sensor_separation * 2] = ping[4] 
+        ir_ranges[sensor_separation * 2] = ir[4] 
+
+        # Rear Far Left (Close to wheel)
+        ping_ranges[180 - sensor_separation * 2] = ping[9] #don't have these
+        ir_ranges[180 - sensor_separation * 2] = ir[9]
+
+        # Rear Near Left 
+        ping_ranges[180 - sensor_separation] = ping[9] #don't have these
+        ir_ranges[180 - sensor_separation] = ir[9]
+
+        # Rear Center
+        ping_ranges[180] = ping[5]
+        ir_ranges[180] = ir[5]
+        
+        # Rear Near Right 
+        ping_ranges[180 + sensor_separation] = ping[9] #don't have these
+        ir_ranges[180 + sensor_separation] = ir[9]
+
+        # Rear Far Right (Close to wheel)
+        ping_ranges[180 + sensor_separation * 2] = ping[9] #don't have these
+        ir_ranges[180 + sensor_separation * 2] = ir[9] 
+
+        # Front Far Right (Close to wheel)
+        ping_ranges[360 - sensor_separation * 2] = ping[0]
+        ir_ranges[360 - sensor_separation * 2] = ir[0] 
+
+        # Front Near Right 
+        ping_ranges[360 - sensor_separation] = ping[1]
+        ir_ranges[360 - sensor_separation] = ir[1]
 
         # LaserScan: http://docs.ros.org/api/sensor_msgs/html/msg/LaserScan.html
         ultrasonic_scan = LaserScan()
