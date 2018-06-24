@@ -659,23 +659,23 @@ class PropellerComm(object):
         ir_ranges[sensor_separation * 2] = ir[4] 
 
         # Rear Far Left (Close to wheel)
-        ping_ranges[180 - sensor_separation * 2] = ping[9] #don't have these
-        ir_ranges[180 - sensor_separation * 2] = ir[9]
+        ping_ranges[180 - sensor_separation * 2] = ping[5]
+        ir_ranges[180 - sensor_separation * 2] = ir[5]
 
         # Rear Near Left 
-        ping_ranges[180 - sensor_separation] = ping[9] #don't have these
-        ir_ranges[180 - sensor_separation] = ir[9]
+        ping_ranges[180 - sensor_separation] = ping[6]
+        ir_ranges[180 - sensor_separation] = ir[6]
 
         # Rear Center
-        ping_ranges[180] = ping[5]
-        ir_ranges[180] = ir[5]
+        ping_ranges[180] = ping[7]
+        ir_ranges[180] = ir[7]
         
         # Rear Near Right 
-        ping_ranges[180 + sensor_separation] = ping[9] #don't have these
-        ir_ranges[180 + sensor_separation] = ir[9]
+        ping_ranges[180 + sensor_separation] = ping[8]
+        ir_ranges[180 + sensor_separation] = ir[8]
 
         # Rear Far Right (Close to wheel)
-        ping_ranges[180 + sensor_separation * 2] = ping[9] #don't have these
+        ping_ranges[180 + sensor_separation * 2] = ping[9]
         ir_ranges[180 + sensor_separation * 2] = ir[9] 
 
         # Front Far Right (Close to wheel)
