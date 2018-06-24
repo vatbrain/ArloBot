@@ -63,7 +63,7 @@ propeller board with SimpleIDE!!!
 // PROXIMITY SENSORS:
 // IMPORTANT! This section is very important!
 // SETTINGS: Proximity (PING & IR) Sensor count and location:
-#define NUMBER_OF_PING_SENSORS 6
+#define NUMBER_OF_PING_SENSORS 10
 #define NUMBER_OF_IR_SENSORS 2
 
 // QUESTION: Do you have PING sensors on the front of your robot?
@@ -75,7 +75,7 @@ propeller board with SimpleIDE!!!
 // QUESTION: Do you have PING sensors on the back of your robot?
 #define hasRearPingSensors
 #define FIRST_REAR_PING_SENSOR_NUMBER 5 // Count from 0
-#define HOW_MANY_REAR_PING_SENSORS 1
+#define HOW_MANY_REAR_PING_SENSORS 5
 
 // QUESTION: Do you have IR sensors on the front of your robot?
 //#define hasFrontIRSensors
@@ -109,9 +109,9 @@ All of these will be assumed to face forward. */
    Remember the order is based on the order that they are plugged
    in to your board.
    WARNING: Be sure the array has the correct number of entries! */
-const int haltDistance[NUMBER_OF_PING_SENSORS] = {5, 10, 12, 10, 5, 12};
+const int haltDistance[NUMBER_OF_PING_SENSORS] = {5, 10, 12, 10, 5, 5, 10, 12, 10, 5};
 //const int haltDistance[NUMBER_OF_PING_SENSORS] = {5, 10, 12, 10, 5, 5, 10, 12, 10, 5, 10, 12, 10, 12};
-const int startSlowDownDistance[NUMBER_OF_PING_SENSORS] = { 8, 40, MAX_DISTANCE, 40, 8, MAX_DISTANCE};
+const int startSlowDownDistance[NUMBER_OF_PING_SENSORS] = {8, 40, MAX_DISTANCE, 40, 8, 8, 40, MAX_DISTANCE, 40, 8};
 //const int startSlowDownDistance[NUMBER_OF_PING_SENSORS] = {8, 40, MAX_DISTANCE, 40, 8, 8, 40, MAX_DISTANCE, 40, 8, 40, MAX_DISTANCE, 40, MAX_DISTANCE};
 // Set shorter distances for IR sensors because they are less reliable.
 const int IRstartSlowDownDistance[NUMBER_OF_IR_SENSORS] = {IR_MAX_DISTANCE, IR_MAX_DISTANCE };
@@ -122,19 +122,19 @@ does not apply to them. */
 // QUESTION: Sensor Identities:
 // Put the sensor number by each label
 // Comment out any sensor you do not have
-#define FRONT_CENTER_SENSOR 2
 // NOTE: IF you comment out the FRONT_CENTER_SENSOR, then ALL Front sensors are ignored for escaping!
 // "Left" refers to the ROBOT's left, assuming he faces the way he drives "forward"
+#define FRONT_FAR_RIGHT_SENSOR 0
+#define FRONT_NEAR_RIGHT_SENSOR 1
+#define FRONT_CENTER_SENSOR 2
 #define FRONT_NEAR_LEFT_SENSOR 3
 #define FRONT_FAR_LEFT_SENSOR 4
-#define FRONT_NEAR_RIGHT_SENSOR 1
-#define FRONT_FAR_RIGHT_SENSOR 0
-//#define REAR_FAR_RIGHT_SENSOR 5
-//#define REAR_NEAR_RIGHT_SENSOR 6
-#define REAR_CENTER_SENSOR 5
+#define REAR_FAR_LEFT_SENSOR 5
+#define REAR_NEAR_LEFT_SENSOR 6
+#define REAR_CENTER_SENSOR 7
+#define REAR_NEAR_RIGHT_SENSOR 8
+#define REAR_FAR_RIGHT_SENSOR 9
 // NOTE: IF you comment out the REAR_CENTER_SENSOR, then ALL Rear sensors are ignored for escaping!
-//#define REAR_NEAR_LEFT_SENSOR 8
-//#define REAR_FAR_LEFT_SENSOR 9
 //#define FRONT_UPPER_DECK_NEAR_LEFT_SENSOR 10
 //#define FRONT_UPPER_DECK_CENTER_SENSOR 11
 //#define FRONT_UPPER_DECK_NEAR_RIGHT_SENSOR 12
