@@ -89,7 +89,7 @@ All code here heavily borrowed from everywhere code can be found! :)
 #include "ping.h"
 #endif
 
-#ifdef hasMotorPowerMonitorCircuit
+#if defined(hasMotorPowerMonitorCircuit) || defined(hasADC_IRs)
 /* Nothing else in my code uses the built in ADC,
 although you could modify the code to use it with
 IR sensors. */
@@ -343,8 +343,13 @@ int main() {
                 pause(1000); // Longer pauses when robot is uninitialized
             #endif
             }
-        }
+        } /* while (robotInitialized == 0) */
 
+   #if defined(hasMotorPowerMonitorCircuit) || defined(hasADC_IRs)
+     // The input numbers for adc_init are printed right on the Activity Board.
+     adc_init(21, 20, 19, 18); // CS=21, SCL=20, DO=19, DI=18
+   #endif
+ 
     #ifdef hasQuickStartBoard
     // Start 2nd Propeller Board Communication cog
         cogstart(&pollPropBoard2, NULL, prop2stack, sizeof prop2stack);
@@ -467,9 +472,9 @@ int main() {
                 int ledNumber = strtod(token, &unconverted);
                 token = strtok(NULL, delimiter);
                 int ledState = strtod(token, &unconverted);
-#ifdef hasLEDs
-                ledArray[ledNumber] = ledState;
-#endif
+		#ifdef hasLEDs
+                  ledArray[ledNumber] = ledState;
+		#endif
                 timeoutCounter = 0;
             } else if (buf[0] == 'p') {
                 //Update the X, Y position and heading
@@ -769,10 +774,9 @@ void broadcastOdometry(void *par) {
         if (throttleStatus > 9) {
             // Check Motor Power
             #ifdef hasMotorPowerMonitorCircuit
-            // The input numbers for adc_init are printed right on the Activity Board.
-            adc_init(21, 20, 19, 18);
-            leftMotorPower = adc_volts(LEFT_MOTOR_ADC_PIN);
-            rightMotorPower = adc_volts(RIGHT_MOTOR_ADC_PIN);
+              // adc_init moved to main()
+              leftMotorPower = adc_volts(LEFT_MOTOR_ADC_PIN);
+              rightMotorPower = adc_volts(RIGHT_MOTOR_ADC_PIN);
             #endif
             dprint(term, "s\t%d\t%d\t%d\t%d\t%d\t%d\t%.2f\t%.2f\t%d\t%d\n", safeToProceed, safeToRecede, Escaping, abd_speedLimit, abdR_speedLimit, minDistanceSensor, leftMotorPower, rightMotorPower, cliff, floorO);
 #ifdef hasButtons
@@ -963,8 +967,9 @@ void pollPropBoard2(void *par) {
         #endif
     }
 }
-#else
+#else // #ifdef hasQuickStartBoard
 void pollPingSensors(void *par) {
+    double adc_v = 0; // temp store for on-board ADC reading
     int ir = 0, i;
     while (1)                                    // Repeat indefinitely
     {
@@ -975,7 +980,24 @@ void pollPingSensors(void *par) {
             if (i < NUMBER_OF_IR_ON_MCP3208) {
                 irArray[i] = mcp3208_IR_cm(i);
             }
-            #endif
+            //#elseif defined(hasADC_IRs)
+            #else
+            #ifdef hasADC_IRs
+	      if (i < 2)
+	      {
+		      if (0 == i)
+		      {
+	           adc_v = adc_volts(FRONT_IR_ADC_PIN); // store in temp variable for macro usage
+		      }
+		      else // i must be 1
+		      {
+         		 adc_v = adc_volts(REAR_IR_ADC_PIN); // store in temp variable for macro usage
+		      }
+
+		      irArray[i] = v_to_cm_IR(adc_v);
+	      } 
+            #endif // #ifdef hasADC_IRs
+            #endif // #ifdef hasMCP3208
         }
     }
 }
@@ -987,9 +1009,9 @@ int mcp3208_IR_cm(int channel) {
     int mcp3208cm = 27.86 * pow(mcp3208volts, -1.15); // https://www.tindie.com/products/upgradeindustries/sharp-10-80cm-infrared-distance-sensor-gp2y0a21yk0f/
     return (mcp3208cm);
 }
-#endif
+#endif // #ifdef hasMCP3208
 
-#endif
+#endif // #ifdef hasQuickStartBoard
 
 #ifdef hasGyro
 void pollGyro(void *par) {

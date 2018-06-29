@@ -87,6 +87,19 @@ propeller board with SimpleIDE!!!
 #define FIRST_REAR_IR_SENSOR_NUMBER 1 // Count from 0
 #define HOW_MANY_REAR_IR_SENSORS 1
 
+// From: https://www.tindie.com/products/upgradeindustries/sharp-10-80cm-infrared-distance-sensor-gp2y0a21yk0f/
+// parameter "v" is voltage.
+#define v_to_cm_GP2Y0A21YK0F(v) (27.86 * pow((v), -1.15))
+
+// From: https://www.tindie.com/products/upgradeindustries/sharp-20-150cm-infrared-distance-sensor/
+// parameter "v" is voltage.
+#define v_to_cm_GP2Y0A02YK0F(v) (306.439 + (v) * (-512.611 + (v) * (382.268 + (v) * (-129.893 + (v) * 16.2537))))
+
+#define hasADC_IRs
+// Can use onboard ADC to read up to two IR sensors.
+// Modify macro below to call macro appropriate for type of IR sensor
+#define v_to_cm_IR(v) (v_to_cm_GP2Y0A02YK0F((v)))
+
 // QUESTION: Do you have PING sensors on the front "upper deck" of your robot?
 /* These would be facing straight forward in the middle of decks above
 the deck the circle of sensors is on.
@@ -182,6 +195,8 @@ If you don't want to do this, just comment this setting out:
 // If these get flipped just flip the wires, or the numbers.
 #define LEFT_MOTOR_ADC_PIN 0
 #define RIGHT_MOTOR_ADC_PIN 1
+#define FRONT_IR_ADC_PIN 2
+#define REAR_IR_ADC_PIN 3
 // Value for reported left and right motor ADC voltage when hasMotorPowerMonitorCircuit is not defined.
 // A value less than 1 will prevent the robot from moving under ROS control in propellerbot_node.py unless that file is modified.   
 // In propellerbot_node.py, the ratio 15/4.69 is used to convert the right motor ADC voltage to measured and reported robot battery voltage. 

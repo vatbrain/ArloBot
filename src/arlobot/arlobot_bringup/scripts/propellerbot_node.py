@@ -558,7 +558,11 @@ class PropellerComm(object):
                 # Be sure "ultrasonic_scan.range_max" is set higher than this or
                 # costmap will ignore these and not clear the cost map!
                 ping[i] = artificial_far_distance
-            ir[i] = (sensor_data.get('i' + str(i), artificial_far_distance * 100) / 100.0) + sensor_offset  # Convert cm to meters and add offset
+            #BEB ir[i] = (sensor_data.get('i' + str(i), artificial_far_distance * 100) / 100.0) + sensor_offset  # Convert cm to meters and add offset
+        #BEB Begin Only have ir sensors 0 and 1.
+        ir[0] = (sensor_data.get('i' + str(0), artificial_far_distance * 100) / 100.0) + sensor_offset  # Convert cm to meters and add offset
+        ir[1] = (sensor_data.get('i' + str(1), artificial_far_distance * 100) / 100.0) + sensor_offset  # Convert cm to meters and add offset
+        #BEB End
 
         # Overwrite main sensors with upper deck sensors if they exist and are closer,
         # TODO: This code is very manual. It won't break if you don't have these sensors, but
@@ -648,43 +652,43 @@ class PropellerComm(object):
 
         # Front Center 
         ping_ranges[0] = ping[2]
-        ir_ranges[0] = ir[2]
+        ir_ranges[0] = ir[0]
 
         # Front Near Left 
         ping_ranges[sensor_separation] = ping[3] 
-        ir_ranges[sensor_separation] = ir[3] 
+        #ir_ranges[sensor_separation] = ir[3] 
 
         # Front Far Left (Close to wheel)
         ping_ranges[sensor_separation * 2] = ping[4] 
-        ir_ranges[sensor_separation * 2] = ir[4] 
+        #ir_ranges[sensor_separation * 2] = ir[4] 
 
         # Rear Far Left (Close to wheel)
         ping_ranges[180 - sensor_separation * 2] = ping[5]
-        ir_ranges[180 - sensor_separation * 2] = ir[5]
+        #ir_ranges[180 - sensor_separation * 2] = ir[5]
 
         # Rear Near Left 
         ping_ranges[180 - sensor_separation] = ping[6]
-        ir_ranges[180 - sensor_separation] = ir[6]
+        #ir_ranges[180 - sensor_separation] = ir[6]
 
         # Rear Center
         ping_ranges[180] = ping[7]
-        ir_ranges[180] = ir[7]
+        ir_ranges[180] = ir[1]
         
         # Rear Near Right 
         ping_ranges[180 + sensor_separation] = ping[8]
-        ir_ranges[180 + sensor_separation] = ir[8]
+        #ir_ranges[180 + sensor_separation] = ir[8]
 
         # Rear Far Right (Close to wheel)
         ping_ranges[180 + sensor_separation * 2] = ping[9]
-        ir_ranges[180 + sensor_separation * 2] = ir[9] 
+        #ir_ranges[180 + sensor_separation * 2] = ir[9] 
 
         # Front Far Right (Close to wheel)
         ping_ranges[360 - sensor_separation * 2] = ping[0]
-        ir_ranges[360 - sensor_separation * 2] = ir[0] 
+        #ir_ranges[360 - sensor_separation * 2] = ir[0] 
 
         # Front Near Right 
         ping_ranges[360 - sensor_separation] = ping[1]
-        ir_ranges[360 - sensor_separation] = ir[1]
+        #ir_ranges[360 - sensor_separation] = ir[1]
 
         # LaserScan: http://docs.ros.org/api/sensor_msgs/html/msg/LaserScan.html
         ultrasonic_scan = LaserScan()
